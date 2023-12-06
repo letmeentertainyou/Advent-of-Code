@@ -9,7 +9,7 @@ find out which seed corresponded to the lowest final number.
 
 Step 1 parse all the seeds.
 Step 2 get the first map implementation working.
-Step 3 through walk through all the maps.
+Step 3 walk through all the maps.
 Step 4 check the lowest seed number.
 """
 from math import inf
@@ -35,7 +35,7 @@ def part_1(filename: str) -> None:
     seed_split = file[0].strip().split(" ")[1::]
     seeds = {s: [int(s)] for s in seed_split}
 
-    for key, seed in tuple(seeds.items()):
+    for key, seed in seeds.items():
         seed_length = 1
         for line in file[2:]:
             if ":" in line:
@@ -44,7 +44,6 @@ def part_1(filename: str) -> None:
             elif line == "\n":
                 if len(seed) < seed_length:
                     seed.append(seed[-1])
-                    seeds[key] = seed
 
             elif len(seed) < seed_length:
                 seed = check_against_map(seed, *line.split(" "))
