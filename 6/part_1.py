@@ -12,9 +12,8 @@ import re
 
 
 def time_to_score(time: int, high_score: int):
-    # Get all possible scores for a given input time.
-    # Then return that.
-    # You only need to do half the work because it mirrors.
+    """This function gets all possible scores higher than high_score
+    for a given input time, and returns the sum of that list."""
     res = []
     for x in range(1, time):
         diff = time - x
