@@ -1,16 +1,18 @@
 #!/bin/python3
 """
-After I got my logic implemented I had an issue with the two pairs because I was using set.subset and of
-course the set of [2, 2] is just [2] which gave me the wrong answer. I wracked my brain trying to find the
-flaw in my logic and finally figured that out. At that point I asked Chat GPT how to correctly get perfect
-subsets and not the sloppy nonsense I was getting. I want to be clear that while Chat GPT did help me write
-the is_subset() function, it had no idea what problem I was working on or why.
+For part 2 J is the weakest card sorting wise, but it also is a wild card for the Counter. My first idea
+would have over counted the number of cards in each hand by a lot.
+I need to know what the best possible hand is with x wild cards without creating an impossible hand.
+
+This was a really fun puzzle and I enjoyed working on it. However, I butted heads against the Python language
+a lot. It just never did what my intuition said it should. I would have solved this literally hours sooner if
+the code did what I intended it to. Which I guess is usually not the computer's fault.
 """
 from collections import Counter, defaultdict
 
 
 # Chat GPT wrote this function that respects the individual count of each item
-# Which mattered because in my old code [2, 2] was occurring as a subset of [2, 1, 1, 1]
+# Which mattered because in old code [2, 2] was occurring as a subset of [2, 1, 1,1]
 # I don't understand why that would be a subset when it isn't a perfect match but at
 # least Chat GPT understands.
 def is_subset(list1, list2):
@@ -41,7 +43,7 @@ def rank_hands(hands):
 
 
 def sort_hands_by_score(ranked_hands):
-    values = "23456789TJQKA"
+    values = "J23456789TQKA"
     for key in ranked_hands:
         hands = ranked_hands[key]
         hands = sorted(hands, key=lambda word: [values.index(i) for i in word[0]])
@@ -49,7 +51,15 @@ def sort_hands_by_score(ranked_hands):
     return ranked_hands
 
 
-def part_1(filename: str) -> None:
+def handle_jacks(count, hand: str):
+    if hand != "JJJJJ":
+        num_jacks = count["J"]
+        del count["J"]
+        count[max(count, key=count.get)] += num_jacks
+    return count
+
+
+def part_2(filename: str) -> None:
     with open(filename, "r", encoding="UTF-8") as tmpfile:
         file = tmpfile.readlines()
 
@@ -57,6 +67,8 @@ def part_1(filename: str) -> None:
     for line in file:
         tmp = line.strip().split(" ")
         count = Counter(tmp[0])
+        if "J" in tmp[0]:
+            count = handle_jacks(count, tmp[0])
         tmp.append(count)
         hands.append(tmp)
 
@@ -74,6 +86,7 @@ def part_1(filename: str) -> None:
     print(answer)
 
 
-part_1("input.txt")
+part_2("input.txt")
 
-# Answer: 249638405
+# Too high
+# Answer: 249776650
