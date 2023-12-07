@@ -76,13 +76,13 @@ def part_2(filename: str) -> None:
     ranked_hands = rank_hands(hands)
     sorted_hands = sort_hands_by_score(ranked_hands)
 
-    count = 0
+    rank = 0
     answer = 0
     for k in sorted(sorted_hands.keys()):
         for v in sorted_hands[k]:
             # print(v)
-            count += 1
-            answer += int(v[1]) * count
+            rank += 1
+            answer += int(v[1]) * rank
 
     print(answer)
 
