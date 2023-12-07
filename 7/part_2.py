@@ -46,12 +46,13 @@ def sort_hands_by_score(ranked_hands):
     values = "J23456789TQKA"
     for key in ranked_hands:
         hands = ranked_hands[key]
-        hands = sorted(hands, key=lambda word: [values.index(i) for i in word[0]])
+        hands = sorted(hands, key=lambda hand: [values.index(i) for i in hand[0]])
         ranked_hands[key] = hands
     return ranked_hands
 
 
-def handle_jacks(count, hand: str):
+def handle_jokers(count, hand: str):
+    # I had the hand JJJJJ in my input data so I was uniquely aware of this happening.
     if hand != "JJJJJ":
         num_jacks = count["J"]
         del count["J"]
@@ -68,7 +69,7 @@ def part_2(filename: str) -> None:
         tmp = line.strip().split(" ")
         count = Counter(tmp[0])
         if "J" in tmp[0]:
-            count = handle_jacks(count, tmp[0])
+            count = handle_jokers(count, tmp[0])
         tmp.append(count)
         hands.append(tmp)
 

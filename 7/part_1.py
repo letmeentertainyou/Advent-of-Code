@@ -44,7 +44,7 @@ def sort_hands_by_score(ranked_hands):
     values = "23456789TJQKA"
     for key in ranked_hands:
         hands = ranked_hands[key]
-        hands = sorted(hands, key=lambda word: [values.index(i) for i in word[0]])
+        hands = sorted(hands, key=lambda hand: [values.index(i) for i in hand[0]])
         ranked_hands[key] = hands
     return ranked_hands
 
