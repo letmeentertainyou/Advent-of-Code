@@ -12,7 +12,7 @@ from collections import Counter, defaultdict
 
 
 # Chat GPT wrote this function that respects the individual count of each item
-# Which mattered because in old code [2, 2] was occurring as a subset of [2, 1, 1,1]
+# Which mattered because in my old code [2, 2] was occurring as a subset of [2, 1, 1,1]
 # I don't understand why that would be a subset when it isn't a perfect match but at
 # least Chat GPT understands.
 def is_subset(list1, list2):
