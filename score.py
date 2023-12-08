@@ -2,6 +2,11 @@
 """I bought the Awk book, and when I get further in it, I'm going to use Awk for this
 score!"""
 
+# Expand this script to give me a top three days
+# And a top part 1
+# and a top part 2.
+# I will need a data structure that keeps count of the Days and the parts.
+
 
 def line_sum(line: str):
     return sum(int(i) for i in line.split(" "))
