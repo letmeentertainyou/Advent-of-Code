@@ -2,20 +2,30 @@
 """
 This part is literally just inverting one single step. It might be the easiest part 2.
 
-The only problem I ran into is the order of the terms x + y is the same as y + x
-But that is not true with subtraction. The example data was useful for debugging that
-even though it was totally worthless for part 1. I found the text of part 2 to be 
-unhelpful though.
+The only problem I ran into is the order of the terms flr example: x + y is the same as y + x .
+But that is not true with subtraction.
 """
-import numpy
 
 
-def not_all_zeroes(list_of_ints):
-    """I'm positive there is elegant way to do this in Python."""
-    for value in list_of_ints:
-        if value != 0:
-            return True
-    return False
+def diff(list_of_ints):
+    """I have no clue why -1 * (a - b) worked and abs(a - b) didn't. But now my output matches
+    numpy's and who am I to argue with numpy?"""
+    res = []
+    for i, v in enumerate(list_of_ints[:-1]):
+        res.append(-1 * (v - list_of_ints[i + 1]))
+    return res
+
+
+def all_zeroes(list_of_ints):
+    """
+    This is pretty straightforward and it could be inlined but it's a lot
+    of chars and I'm using it in a while loop so this is cleaner.
+
+    This might be a little slower than the custom for loop because all()
+    doesn't have a break-early option. So it is comparing every item even
+    after the first non zero is found.
+    """
+    return all([x == 0 for x in list_of_ints])
 
 
 def solve(list_of_values):
@@ -23,9 +33,8 @@ def solve(list_of_values):
     work out the next value backwards.
     """
     res = [list_of_values]
-    while not_all_zeroes(res[-1]):
-        diff = list(numpy.diff(res[-1]))
-        res.append(diff)
+    while not all_zeroes(res[-1]):
+        res.append(diff(res[-1]))
 
     backwards = res[::-1]
     for index, arr in enumerate(tuple(backwards[:-1])):

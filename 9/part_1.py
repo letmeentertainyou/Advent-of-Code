@@ -6,21 +6,36 @@ correct answer. With my own version of diff the sample data worked fine but a fe
 inputs were not reducing to all zeroes.
 
 I think it has to do with negative numbers and even though I was using abs I was still getting a wrong answer.
-I really wish they have show negative numbers in the sample since they are in the real data.
-
-I have found the AoC rules to be directly misleading on several days now. Oh well on to part 2.
+I really wish they would have shown negative numbers in the sample since they are in the real data.
 
 This can be sped-up a lot by removing the numpy import, I will do that tomorrow.
+
+---
+
+I removed numpy.diff and now it's about 5x faster without the numpy import taking a few hundred milliseconds.
+
 """
-import numpy
 
 
-def not_all_zeroes(list_of_ints):
-    """I'm positive there is elegant way to do this in Python."""
-    for value in list_of_ints:
-        if value != 0:
-            return True
-    return False
+def diff(list_of_ints):
+    """I have no clue why -1 * (a - b) worked and abs(a - b) didn't. But now my output matches
+    numpy's and who am I to argue with numpy?"""
+    res = []
+    for i, v in enumerate(list_of_ints[:-1]):
+        res.append(-1 * (v - list_of_ints[i + 1]))
+    return res
+
+
+def all_zeroes(list_of_ints):
+    """
+    This is pretty straightforward and it could be inlined but it's a lot
+    of chars and I'm using it in a while loop so this is cleaner.
+
+    This might be a little slower than the custom for loop because all()
+    doesn't have a break-early option. So it is comparing every item even
+    after the first non zero is found.
+    """
+    return all([x == 0 for x in list_of_ints])
 
 
 def solve(list_of_values):
@@ -28,18 +43,14 @@ def solve(list_of_values):
     work out the next value backwards.
     """
     res = [list_of_values]
-    while not_all_zeroes(res[-1]):
-        diff = list(numpy.diff(res[-1]))
-        res.append(diff)
+    while not all_zeroes(res[-1]):
+        res.append(diff(res[-1]))
 
     backwards = res[::-1]
     for index, arr in enumerate(tuple(backwards[:-1])):
         next_arr = backwards[index + 1]
         next_value = arr[-1] + next_arr[-1]
         next_arr.append(next_value)
-
-    # This works but I didn't add zero to the last list. Idk if that will
-    # effect part 2.
 
     return backwards[-1][-1]
 
