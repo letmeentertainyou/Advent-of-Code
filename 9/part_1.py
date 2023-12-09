@@ -33,9 +33,10 @@ def all_zeroes(list_of_ints):
 
     This might be a little slower than the custom for loop because all()
     doesn't have a break-early option. So it is comparing every item even
-    after the first non zero is found.
+    after the first non zero is found. Trying a generator to see if that
+    breaks early.
     """
-    return all([x == 0 for x in list_of_ints])
+    return all(x == 0 for x in list_of_ints)
 
 
 def solve(list_of_values):
@@ -47,7 +48,7 @@ def solve(list_of_values):
         res.append(diff(res[-1]))
 
     backwards = res[::-1]
-    for index, arr in enumerate(tuple(backwards[:-1])):
+    for index, arr in enumerate(backwards[:-1]):
         next_arr = backwards[index + 1]
         next_value = arr[-1] + next_arr[-1]
         next_arr.append(next_value)
@@ -69,20 +70,3 @@ def part_1(filename: str) -> None:
 part_1("input.txt")
 
 # Answer: 1681758908
-
-
-"""
-# I'm leaving my old diff code here so that I can
-# do a post-mortem on why it failed tomorrow.
-# My answer seems broken so I'm trying numpy
-
-def get_differences(list_of_ints):
-    diff = list(numpy.diff(list_of_ints))
-    return diff
-
-    res = []
-    for i, v in enumerate(list_of_ints[:-1]):
-        res.append(abs(v - list_of_ints[i + 1]))
-    return res
-
-"""

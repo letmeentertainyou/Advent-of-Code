@@ -23,9 +23,10 @@ def all_zeroes(list_of_ints):
 
     This might be a little slower than the custom for loop because all()
     doesn't have a break-early option. So it is comparing every item even
-    after the first non zero is found.
+    after the first non zero is found. Trying a generator to see if that
+    breaks early.
     """
-    return all([x == 0 for x in list_of_ints])
+    return all(x == 0 for x in list_of_ints)
 
 
 def solve(list_of_values):
