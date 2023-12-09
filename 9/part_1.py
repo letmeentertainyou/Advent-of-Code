@@ -1,6 +1,4 @@
 #!/bin/python3
-
-
 """
 Dang I lost a lot of time on this one because I tried writing the diff algorithm myself and I was failing
 somewhere. I finally looked up how to diff a list of ints and used numpy.diff which instantly gave me the
@@ -11,6 +9,8 @@ I think it has to do with negative numbers and even though I was using abs I was
 I really wish they have show negative numbers in the sample since they are in the real data.
 
 I have found the AoC rules to be directly misleading on several days now. Oh well on to part 2.
+
+This can be sped-up a lot by removing the numpy import, I will do that tomorrow.
 """
 import numpy
 
@@ -34,7 +34,6 @@ def solve(list_of_values):
 
     backwards = res[::-1]
     for index, arr in enumerate(tuple(backwards[:-1])):
-        arr[-1]
         next_arr = backwards[index + 1]
         next_value = arr[-1] + next_arr[-1]
         next_arr.append(next_value)
