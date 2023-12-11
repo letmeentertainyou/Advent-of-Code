@@ -12,7 +12,7 @@ This was fun to solve my first graph problem without external resources!
 
 
 def hash(y: int, x: int):
-    return f"Y{y}X{x}"
+    return f"{y}:{x}"
 
 
 def get_coords(char, y, x):
