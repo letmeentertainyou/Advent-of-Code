@@ -1,16 +1,13 @@
 #!/bin/python3
 """
-NOT SOLVED:
+This is my first graph problem so I just focused on learning about the data structure today.
 
-I'm just committing my work so far. This is my first graph problem so I just focused on learning about the data structure today.
-
-Tomorrow I will study path finding, and work on the problem. I suspect I will do well with part 2 because I took the time
-to build the graph right. If you are struggling with day 10 maybe this graph outline will help you.
-
-I haven't written a function to solve which direction S goes yet. I'm just using a hardcoded value for S. I will add that function
-after solving the path finding.
+I haven't written a function to solve which direction S goes yet. I'm just using a hardcoded value for S. 
+I will add that function after solving the path finding.
 
 I know using y, x instead of x, y is confusing but that is how I read the file as rows and then columns.
+
+This was fun to solve my first graph problem without external resources!
 """
 
 
@@ -22,6 +19,12 @@ def get_coords(char, y, x):
     """I made this into a function so that I could use it with different y, x values. This function will
     also help with solving for what S is supposed to be by checking the characters next to S to see if they connect
     with S."""
+
+    # This function needs a hardcoded case for S because it might be called with S from other nodes.
+    # This should call a function that solves for S so it isn't hard coded.
+    if char == "S":
+        char = "|"
+
     directions = {
         "-": ((y, x - 1), (y, x + 1)),
         "|": ((y - 1, x), (y + 1, x)),
@@ -56,7 +59,6 @@ def add_node(y, x, char, len_file, len_line, file):
         # This is to cross reference that the next node connects with the old one.
         next_char = file[Y][X]
         next_chords = get_coords(next_char, Y, X)
-        # print(any(c == (y, x) for c in next_chords))
         return any(c == (y, x) for c in next_chords)
 
     coords = get_coords(char, y, x)
@@ -67,8 +69,28 @@ def add_node(y, x, char, len_file, len_line, file):
     return node
 
 
-# My S is a | node but I should probably come up with a way to calculate what S will be
-# So that anyone else can use this code too.
+def calculate_distance(start, graph):
+    """This function took me a while to debug but we got there in the end!
+
+    # Pick one of the nodes in start and then walk through keep track of he node
+    # You came from until we get back to start.
+    # Count the distance.
+    """
+    prev = start
+    next = graph[start][1]
+    count = 1
+    while next != start:
+        val = graph[next]
+        for v in val:
+            if v != prev:
+                new = v
+                break
+        prev = next
+        next = new
+        count += 1
+    return count // 2
+
+
 def part_1(filename: str) -> None:
     with open(filename, "r", encoding="UTF-8") as tmpfile:
         file = tmpfile.readlines()
@@ -80,21 +102,15 @@ def part_1(filename: str) -> None:
         len_line = len(line)
         for x, char in enumerate(line):
             if char == "S":
-                # S is hardcoded, an additional challenge is to write a function that solves for S.
-                # If you know what char your start is then hardcode it below.
-                node = add_node(y, x, "|", len_file, len_line, file)
-                start = node
-
+                start = hash(y, x)
             node = add_node(y, x, char, len_file, len_line, file)
-            graph[hash(y, x)] = node
+            if node:
+                graph[hash(y, x)] = node
 
-    # Start by looping through the keys in start
-    # And then apply a path finding algorithm,
-    # Maybe only one start key is required because it's a cycle.
-    for key in start:
-        ...  # find the path here.
+    answer = calculate_distance(start, graph)
+    print(answer)
 
 
 part_1("input.txt")
 
-# Answer: NOT SOLVED YET
+# Answer: 6820
