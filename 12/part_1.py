@@ -47,7 +47,7 @@ def solve(springs, groups):
     # For a permutation to be valid there needs to be x characters to the right
     # Where x is sum(remaining group members) + len(remaining group members)
     # So the permutations function backtracks when that rule is broken
-    def r(ranges, groups):
+    def r(ranges, groups, index=0):
         """This is the inner recursive function for counting the permutations."""
         return 0
 
