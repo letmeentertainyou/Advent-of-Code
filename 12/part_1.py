@@ -7,7 +7,6 @@ find it tomorrow. So this code just represents how far I got tonight.
 
 I got all the ranges in a given line that can be a faulty spring. Now I just need to find
 a clean implementation of permutations that keeps track of the rules of this game.
-? = unknown
 
 One step to simplify this is that the order of the groupings matter
 3 2 1 does not match 1 2 3 etc so you can use that as a sort of map.
