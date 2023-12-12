@@ -35,14 +35,7 @@ def get_ranges(springs):
     return ranges
 
 
-# For a permutation to be valid there needs to be x characters to the right
-# Where x is sum(remaining group members) + len(remaining group members)
-# So the permutations function backtracks when that rule is broken
-
 # You need to know what the contiguous ranges are and which of them can be subdivided.
-# The max number of ranges including sub division needs to match len(groups)
-
-
 def solve(springs, groups):
     """Figure out the possible ranges in springs (can be sub function)
     apply the map of groups to those ranges, count permutations (or whatever)
@@ -51,6 +44,9 @@ def solve(springs, groups):
     # This should be a simple range permutation problem but I don't know the elegant answer yet.
     # Do I loop through ranges or groups?
     # how many ways can our groups fit into the springs map accounting for the ?s ?
+    # For a permutation to be valid there needs to be x characters to the right
+    # Where x is sum(remaining group members) + len(remaining group members)
+    # So the permutations function backtracks when that rule is broken
     def r(ranges, groups):
         """This is the inner recursive function for counting the permutations."""
         return 0
