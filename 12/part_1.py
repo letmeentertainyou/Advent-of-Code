@@ -14,7 +14,7 @@ One step to simplify this is that the order of the groupings matter
 
 
 def get_ranges(springs):
-    "These are all the ranges that can contain a spring."
+    """These are all the ranges that can contain a spring."""
 
     # Save time when we there is only one range.
     if "." not in springs:
