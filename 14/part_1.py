@@ -19,9 +19,6 @@ def is_valid_index_pair(array, x, y):
 
 
 def shift(file, x, y):
-    """This code should be robust enough to work with any of the other four directions. I hope that's relevant for part 2."""
-
-    # This is a little ugly with the double breaks but I didn't feel like making a recursive function.
     while True:
         X, Y = (x - 1, y)
         if is_valid_index_pair(file, X, Y):
