@@ -10,7 +10,9 @@ was really nice to use the test data. I'm going to do that a lot more often.
 # I asked Chat GPT for help with this function because I manually write this code every time.
 # I let GPT write it's own doc strings.
 def is_valid_index_pair(array, x, y):
-    """This function returns True if both x and y are within the valid range of indexes for the given 2D array, and False otherwise. It first checks if x is a valid row index (i.e., it’s between 0 and the number of rows), and then checks if y is a valid column index (i.e., it’s between 0 and the number of columns)."""
+    """This function returns True if both x and y are within the valid range of indexes for the given 2D array, and False otherwise.
+    It first checks if x is a valid row index (i.e., it’s between 0 and the number of rows), and then checks if y is a valid column index
+    (i.e., it’s between 0 and the number of columns)."""
     num_rows = len(array)
     num_cols = len(array[0]) if num_rows > 0 else 0
     return 0 <= x < num_rows and 0 <= y < num_cols
