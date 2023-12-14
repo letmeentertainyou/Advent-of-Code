@@ -1,12 +1,17 @@
 #!/bin/python3
 """I bought the Awk book, and when I get further in it, I'm going to use Awk for this
-score!"""
+score!
+
+DNF days are stored as -1 in the file and will be converted to inf in this script. That
+means that my golf score will be inf if I have any missing days.
+"""
+from math import inf
 
 
 def line_parse(line: str):
     line_split = line.strip().split(": ")
     key = line_split[0]
-    part1, part2 = [int(i) for i in line_split[1].split(" ")]
+    part1, part2 = [int(i) if int(i) > 0 else inf for i in line_split[1].split(" ")]
     return key, part1, part2
 
 
