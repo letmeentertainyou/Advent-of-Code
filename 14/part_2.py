@@ -25,15 +25,12 @@ def is_valid_index_pair(array, x, y):
 def shift(file, x, y):
     while True:
         X, Y = (x - 1, y)
-        if is_valid_index_pair(file, X, Y):
-            if file[X][Y] == ".":
-                file[X][Y], file[x][y] = file[x][y], file[X][Y]
-                x = X
-                y = Y
-            else:
-                break
+        if is_valid_index_pair(file, X, Y) and file[X][Y] == ".":
+            file[X][Y], file[x][y] = file[x][y], file[X][Y]
+            x, y = X, Y
         else:
             break
+
     return file
 
 
