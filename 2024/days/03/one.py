@@ -18,8 +18,7 @@ def solve(file: str) -> int:
             y = int(pair[1])
             answer += x * y
 
-        return answer
-    return 0
+    return answer
 
 
 def parse_input(filename: str) -> None:

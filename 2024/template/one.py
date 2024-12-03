@@ -50,4 +50,4 @@ if __name__ == "__main__":
 
 # Test:     .
 # Answer:   .
-# Ranks:    .
+# Rank:     .
