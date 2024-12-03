@@ -27,12 +27,13 @@ def solve(lines) -> None:
     for line in lines:
         if find_safe(line):
             answer += 1
-        else:
-            # This recursively checks each other version of the array slicing away the current index.
-            for i in range(len(line)):
-                if find_safe(line[:i] + line[i + 1 :]):
-                    answer += 1
-                    break
+            continue
+
+        # This recursively checks each other version of the array slicing away the current index.
+        for i in range(len(line)):
+            if find_safe(line[:i] + line[i + 1 :]):
+                answer += 1
+                break
 
     print(answer)
 
@@ -46,7 +47,7 @@ def parse_input(filename: str) -> tuple:
         split_line = [*map(int, line.split(" "))]
         lines.append(split_line)
 
-    return lines
+    solve(lines)
 
 
 if __name__ == "__main__":
@@ -55,7 +56,8 @@ if __name__ == "__main__":
     else:
         filename = "input.txt"
     print(f"Parsing {filename}.")
-    solve(parse_input(filename))
+    parse_input(filename)
+
 
 # Test:      4
 # Answer:    589

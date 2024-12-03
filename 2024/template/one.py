@@ -1,7 +1,9 @@
-1  #!/bin/python3.10
+#!/bin/python3.10
 """
 
 """
+import re
+
 from sys import argv
 from collections import Counter
 from itertools import *
@@ -33,7 +35,8 @@ def parse_input(filename: str) -> tuple:
     for x, line in enumerate(file):
         for y, char in enumerate(line):
             ...
-    return lines
+
+    solve(lines)
 
 
 if __name__ == "__main__":
@@ -42,7 +45,9 @@ if __name__ == "__main__":
     else:
         filename = "input.txt"
     print(f"Parsing {filename}.")
-    solve(parse_input(filename))
+    parse_input(filename)
+
 
 # Test:     .
 # Answer:   .
+# Ranks:    .

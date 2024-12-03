@@ -25,7 +25,8 @@ def parse_input(filename: str) -> tuple:
         left, right = line.split()
         lefts.append(int(left))
         rights.append(int(right))
-    return lefts, rights
+
+    solve(lefts, rights)
 
 
 if __name__ == "__main__":
@@ -34,7 +35,8 @@ if __name__ == "__main__":
     else:
         filename = "input.txt"
     print(f"Parsing {filename}.")
-    solve(*parse_input(filename))
+    parse_input(filename)
+
 
 # Test:      11
 # Answer:    2086478
