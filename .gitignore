@@ -1,6 +1,7 @@
 *cache*
 .vscode
-template
 _*
+test.txt
 input.txt
 rules.txt
+.git

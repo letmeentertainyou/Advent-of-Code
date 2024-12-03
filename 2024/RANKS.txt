@@ -1,0 +1,3 @@
+I sum this file to get my personal score:
+Day 01: 14499 13590
+Day 02: 7197 5157
