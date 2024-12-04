@@ -1,10 +1,5 @@
-#!/bin/python3
-"""I bought the Awk book, and when I get further in it, I'm going to use Awk for this
-score!
+#!/bin/python3.10
 
-DNF days are stored as -1 in the file and will be converted to inf in this script. That
-means that my golf score will be inf if I have any missing days.
-"""
 from math import inf
 
 
@@ -33,6 +28,11 @@ def best_three_days(scores):
     return res
 
 
+def average(scores: list, idx: int):
+    total = sum([s[idx] for s in scores.values()])
+    return total // len(scores)
+
+
 def score_ranks(filename):
     with open(filename, "r", encoding="UTF-8") as tmpfile:
         file = tmpfile.readlines()
@@ -47,8 +47,7 @@ def score_ranks(filename):
     print(f"Your best part 2 is: {min(scores.values(), key=lambda v: v[1])[1]}")
     print(f"Your best three days are:")
     best_three_days(scores)
+    print(f"You average scores p1: {average(scores, 0)}, p2: {average(scores, 1)}")
 
 
 score_ranks("RANKS.txt")
-
-# Day 8 score: 592322

@@ -5,7 +5,7 @@
 import re
 
 from sys import argv
-from collections import Counter
+from collections import Counter, defaultdict
 from itertools import *
 
 
@@ -33,6 +33,7 @@ def parse_input(filename: str) -> tuple:
 
     lines: list = []
     for x, line in enumerate(file):
+
         for y, char in enumerate(line):
             ...
 
