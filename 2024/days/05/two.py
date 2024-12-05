@@ -14,14 +14,14 @@ from sys import argv
 
 class Order:
     def __init__(self):
-        self.l = []
-        self.r = []
+        self.lefts = []
+        self.rights = []
 
-    def al(self, l):
-        self.l.append(l)
+    def al(self, n):
+        self.lefts.append(n)
 
-    def ar(self, r):
-        self.r.append(r)
+    def ar(self, n):
+        self.rights.append(n)
 
 
 def clone_swap(a: list, x: int, y: int):
@@ -32,11 +32,12 @@ def clone_swap(a: list, x: int, y: int):
 
 def solve(page_nums: list[str], page_map: dict[Order]) -> list[str]:
     for l_idx, num in enumerate(page_nums):
-        lefts = page_map[num].l
-        for j in page_nums[l_idx + 1 :]:
-            if j in lefts:
-                r_idx = page_nums.index(j)
-                return solve(clone_swap(page_nums, l_idx, r_idx), page_map)
+        lefts = page_map[num].lefts
+        for right in page_nums[l_idx + 1 :]:
+            if right in lefts:
+                r_idx = page_nums.index(right)
+                swap_nums = clone_swap(page_nums, l_idx, r_idx)
+                return solve(swap_nums, page_map)
     return page_nums
 
 
@@ -46,17 +47,18 @@ def parse_input(filename: str) -> None:
 
     answer = 0
     page_map: dict[Order] = defaultdict(Order)
-    for x, line in enumerate(file):
+    for line in file:
         if "|" in line:
-            l, r = line.strip("\n").split("|")
-            # page_map[l].ar(r)
-            page_map[r].al(l)
+            left, right = line.strip("\n").split("|")
+            # page_map[left].ar(right)
+            page_map[right].al(left)
 
         elif "," in line:
-            page = line.strip("\n").split(",")
-            p = solve(page, page_map)
-            if page != p:
-                answer += int(p[len(page) // 2])
+            page_nums = line.strip("\n").split(",")
+            swap_nums = solve(page_nums, page_map)
+            if page_nums != swap_nums:
+                mid_idx = len(swap_nums) // 2
+                answer += int(swap_nums[mid_idx])
 
     print(answer)
 

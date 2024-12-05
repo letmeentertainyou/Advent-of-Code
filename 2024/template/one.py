@@ -2,8 +2,8 @@
 """
 
 """
-import re
 import itertools as it
+import re
 
 from collections import Counter, defaultdict
 from copy import deepcopy

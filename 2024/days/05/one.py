@@ -11,21 +11,21 @@ from sys import argv
 
 class Order:
     def __init__(self):
-        self.l = []
-        self.r = []
+        self.lefts = []
+        self.rights = []
 
-    def al(self, l):
-        self.l.append(l)
+    def al(self, n):
+        self.lefts.append(n)
 
-    def ar(self, r):
-        self.r.append(r)
+    def ar(self, n):
+        self.rights.append(n)
 
 
 def solve(page_nums: list[str], page_map: dict[Order]) -> bool:
     for l_idx, num in enumerate(page_nums):
-        lefts = page_map[num].l
-        for j in page_nums[l_idx + 1 :]:
-            if j in lefts:
+        lefts = page_map[num].lefts
+        for right in page_nums[l_idx + 1 :]:
+            if right in lefts:
                 return False
     return True
 
@@ -36,16 +36,17 @@ def parse_input(filename: str) -> None:
 
     answer = 0
     page_map: dict[Order] = defaultdict(Order)
-    for x, line in enumerate(file):
+    for line in file:
         if "|" in line:
-            l, r = line.strip("\n").split("|")
-            # page_map[l].ar(r)
-            page_map[r].al(l)
+            left, right = line.strip("\n").split("|")
+            # page_map[left].ar(right)
+            page_map[right].al(left)
 
         elif "," in line:
-            page = line.strip("\n").split(",")
-            if solve(page, page_map):
-                answer += int(page[len(page) // 2])
+            page_nums = line.strip("\n").split(",")
+            if solve(page_nums, page_map):
+                mid_idx = len(page_nums) // 2
+                answer += int(page_nums[mid_idx])
 
     print(answer)
 
