@@ -1,22 +1,15 @@
 #!/bin/python3.10
 """
-This was the first data where splitting up the data into a manageable workflow was the majority of the work and it took me
-a while to understand the shape of my containers here. Ultimately it was a fairly simple problem of mapping out the lefts and
-rights associated with each number and the iterating through every number and every line. If ever a number that should be to
-the left of N is on it's right then we have an error. 
-
-Overall I liked this problem but I definitely panicked a bit while I was working it out and it took over an hour to do both parts.
+This was the first data where splitting up the data into a manageable workflow was the majority of the work
+and it took me a while to understand the shape of my containers here. Ultimately it was a fairly simple problem
+of mapping out the lefts and rights associated with each number and the iterating through every number and every
+line. If ever a number that should be to the left of N is on it's right then we have an error. 
 """
-from sys import argv
 from collections import defaultdict
+from sys import argv
 
 
 class Order:
-    """
-    You don't need the list of rights at all to solve the problem but I like that this parse can be extended easily to care
-    about both directions of parsing.
-    """
-
     def __init__(self):
         self.l = []
         self.r = []
@@ -28,42 +21,31 @@ class Order:
         self.r.append(r)
 
 
-def mapper(orders: list[tuple]):
-    filled_map = defaultdict(Order)
-    for x, y in orders:
-        filled_map[x].ar(y)
-        filled_map[y].al(x)
-
-    return filled_map
-
-
-def solve(page: list, filled_map) -> None:
-    for i, k in enumerate(page):
-        lefts = filled_map[k].l
-        for j in page[i + 1 :]:
+def solve(page_nums: list[str], page_map: dict[Order]) -> bool:
+    for l_idx, num in enumerate(page_nums):
+        lefts = page_map[num].l
+        for j in page_nums[l_idx + 1 :]:
             if j in lefts:
                 return False
     return True
 
 
-def parse_input(filename: str) -> tuple:
+def parse_input(filename: str) -> None:
     with open(filename, "r", encoding="UTF-8") as tmpfile:
         file = tmpfile.readlines()
 
-    orders: list[tuple] = []
-    pages: list = []
+    answer = 0
+    page_map: dict[Order] = defaultdict(Order)
     for x, line in enumerate(file):
         if "|" in line:
-            orders.append(line.strip("\n").split("|"))
-        elif "," in line:
-            pages.append(line.strip("\n").split(","))
+            l, r = line.strip("\n").split("|")
+            # page_map[l].ar(r)
+            page_map[r].al(l)
 
-    filled_map = mapper(orders)
-    answer = 0
-    for page in pages:
-        if solve(page, filled_map):
-            mid_index = len(page) // 2
-            answer += int(page[mid_index])
+        elif "," in line:
+            page = line.strip("\n").split(",")
+            if solve(page, page_map):
+                answer += int(page[len(page) // 2])
 
     print(answer)
 
