@@ -8,8 +8,20 @@ from sys import argv
 from collections import Counter, defaultdict
 from itertools import *
 
+SIDES: list[tuple] = [(-1, 0), (0, 1), (0, -1), (1, 0)]
+CORNERS: list[tuple] = [(-1, -1), (-1, +1), (+1, -1), (+1, +1)]
+EDGES: list[tuple] = [
+    (-1, 0),
+    (1, 0),
+    (0, -1),
+    (0, 1),
+    (-1, -1),
+    (-1, 1),
+    (1, -1),
+    (1, 1),
+]
 
-# This is for 2d arrays.
+
 def is_valid_index_pair(array, x, y) -> bool:
     len_rows = len(array)
     len_cols = len(array[0]) if len_rows else 0
