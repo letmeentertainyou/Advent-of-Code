@@ -32,18 +32,18 @@ def solve(page_nums: list[str], page_map: dict[Order]) -> bool:
 
 def parse_input(filename: str) -> None:
     with open(filename, "r", encoding="UTF-8") as tmpfile:
-        file = tmpfile.readlines()
+        file = (line.strip("\n") for line in tmpfile.readlines())
 
     answer = 0
     page_map: dict[Order] = defaultdict(Order)
     for line in file:
         if "|" in line:
-            left, right = line.strip("\n").split("|")
+            left, right = line.split("|")
             # page_map[left].ar(right)
             page_map[right].al(left)
 
         elif "," in line:
-            page_nums = line.strip("\n").split(",")
+            page_nums = line.split(",")
             if solve(page_nums, page_map):
                 mid_idx = len(page_nums) // 2
                 answer += int(page_nums[mid_idx])

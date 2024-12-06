@@ -3,7 +3,7 @@
 This one was pretty straight forward. Once you identify where the mistake is you swap the current page number
 with the one that should be on it's left and recursively call solve() again. This effectively sorts them into
 the correct order. I lost a fair few precious seconds because Python insists upon editing my array inside of
-a function. I would really prefer a language that deep copies by default. That behaviors is one of the biggest
+a function. I would really prefer a language that deep copies by default. That behavior is one of the biggest
 foot guns in Python and I cannot stand it. It's just bad design and it feels bad every time my array gets nuked 
 inside a function. But at least I will be prepared to use deepcopy on the days ahead. 
 """
@@ -43,18 +43,18 @@ def solve(page_nums: list[str], page_map: dict[Order]) -> list[str]:
 
 def parse_input(filename: str) -> None:
     with open(filename, "r", encoding="UTF-8") as tmpfile:
-        file = tmpfile.readlines()
+        file = (line.strip("\n") for line in tmpfile.readlines())
 
     answer = 0
     page_map: dict[Order] = defaultdict(Order)
     for line in file:
         if "|" in line:
-            left, right = line.strip("\n").split("|")
+            left, right = line.split("|")
             # page_map[left].ar(right)
             page_map[right].al(left)
 
         elif "," in line:
-            page_nums = line.strip("\n").split(",")
+            page_nums = line.split(",")
             swap_nums = solve(page_nums, page_map)
             if page_nums != swap_nums:
                 mid_idx = len(swap_nums) // 2

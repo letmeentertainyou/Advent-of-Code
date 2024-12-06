@@ -51,7 +51,9 @@ def solve(lines) -> None:
 
 def parse_input(filename: str) -> None:
     with open(filename, "r", encoding="UTF-8") as tmpfile:
-        file = tmpfile.readlines()
+        file = (line.strip("\n") for line in tmpfile.readlines())
+        # file = tmpfile.read()
+        # file = tmpfile.readlines()
 
     lines: list = []
     for x, line in enumerate(file):
