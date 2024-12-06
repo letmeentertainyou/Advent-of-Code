@@ -41,7 +41,7 @@ def step_forward(data: dict, pos: complex, dir: complex) -> tuple:
 def solve(data: dict, start: str) -> set | bool:
     """
     This returns the visited keys when a loop isn't detected. I did this so that I wouldn't have two
-    nrealy identical functions in my code.
+    nearly identical functions in my code.
     """
     visited: set = set()
     dir: complex = TOP
