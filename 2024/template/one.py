@@ -9,18 +9,23 @@ from collections import Counter, defaultdict
 from copy import deepcopy
 from sys import argv
 
-SIDES: list[tuple] = [(-1, 0), (0, 1), (0, -1), (1, 0)]
-CORNERS: list[tuple] = [(-1, -1), (-1, +1), (+1, -1), (+1, +1)]
-EDGES: list[tuple] = [
-    (-1, 0),
-    (1, 0),
-    (0, -1),
-    (0, 1),
-    (-1, -1),
-    (-1, 1),
-    (1, -1),
-    (1, 1),
-]
+
+TOP: complex = -1 + 0j
+RIGHT: complex = 0 + 1j
+BOTTOM: complex = 1 + 0j
+LEFT: complex = 0 + -1j
+SIDES: list[complex] = [TOP, RIGHT, BOTTOM, LEFT]
+
+TOP_LEFT = -1 + -1j
+TOP_RIGHT = -1 + 1j
+BOTTOM_LEFT = 1 + -1j
+BOTTOM_RIGHT = 1 + 1j
+CORNERS: list[tuple] = [TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT]
+
+EDGES: list[tuple] = CORNERS + SIDES
+
+# If the edges need to be consecutive
+CON_EDGES = [TOP_LEFT, TOP, TOP_RIGHT, RIGHT, BOTTOM_RIGHT, BOTTOM, BOTTOM_LEFT, LEFT]
 
 
 def clone_swap(a: list, x: int, y: int):
@@ -29,6 +34,7 @@ def clone_swap(a: list, x: int, y: int):
     return A
 
 
+# This is relegated because you can just check if the key is in the dict.
 def is_valid_index_pair(array, x, y) -> bool:
     """
     Note: I should try the default dict method that automatically handles bounds checking.
@@ -38,8 +44,8 @@ def is_valid_index_pair(array, x, y) -> bool:
     return 0 <= x < len_rows and 0 <= y < len_cols
 
 
-def hash(x: int, y: int) -> str:
-    return f"{x}:{y}"
+def hash(x: int, y: int) -> complex:
+    return complex(x, y)
 
 
 def solve(lines) -> None:
