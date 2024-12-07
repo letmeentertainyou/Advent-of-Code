@@ -6,14 +6,30 @@ My brute force is 40 seconds and I'm pretty happy with that after yesterdays pro
 real    0m39.925s
 user    0m39.265s
 sys     0m0.656s
+
+
+
+
+After implementing the above protocol I reduced my time by a factor of 10. Sick!
+real    0m4.888s
+user    0m4.818s
+sys     0m0.068s
 """
 import itertools as it
 
+from math import prod
 from sys import argv
 
 
 def solve(test, nums: list[str]) -> None:
-    ops = ["*", "+", "|"]
+    p = prod(nums)
+    if p == test:
+        return True
+    if p < test:
+        ops = ["*", "+", "|"]
+    else:
+        ops = ["*", "+"]
+
     perms = []
     perms.extend(it.product(ops, repeat=len(nums) - 1))
     for x, perm in enumerate(perms):
