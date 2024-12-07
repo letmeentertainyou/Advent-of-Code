@@ -17,7 +17,6 @@ I think there is a faster way to do this that involves building out a factor tre
 """
 import itertools as it
 
-from math import prod
 from sys import argv
 
 
