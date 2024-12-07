@@ -8,7 +8,7 @@ TOP: complex = -1 + 0j
 RIGHT: complex = 0 + 1j
 BOTTOM: complex = 1 + 0j
 LEFT: complex = 0 + -1j
-SIDES: list[complex] = [TOP, RIGHT, BOTTOM, LEFT]
+SIDES: tuple[complex] = (TOP, RIGHT, BOTTOM, LEFT)
 
 
 def rotate(dir: complex) -> complex:
