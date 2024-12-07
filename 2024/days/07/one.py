@@ -5,28 +5,31 @@ I loved this problem, nice and easy, I was terrified part two would include PEMD
 real    0m0.506s
 user    0m0.495s
 sys     0m0.008s
-"""
-import itertools as it
 
+Optimized times:
+
+real    0m0.147s
+user    0m0.142s
+sys     0m0.005s
+"""
 from sys import argv
 
 
 def solve(test, nums: list[str]) -> None:
-    ops = ["*", "+"]
-    perms = it.product(ops, repeat=len(nums) - 1)
-    for x, perm in enumerate(perms):
-        tot = nums[0]
-        for i, op in enumerate(perm):
-            y = nums[i + 1]
-            if op == "*":
-                tot *= y
-            if op == "+":
-                tot += y
+    def r(tot: int, i: int):
+        if tot == test:
+            return True
 
-            if tot == test:
-                return True
+        i += 1
+        if (tot > test) or (i == len(nums)):
+            return False
 
-    return False
+        if r(tot + nums[i], i):
+            return True
+
+        return r(tot * nums[i], i)
+
+    return r(nums[0], 0)
 
 
 def parse_input(filename: str) -> None:

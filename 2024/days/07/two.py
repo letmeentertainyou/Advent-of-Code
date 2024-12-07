@@ -34,33 +34,42 @@ my real answer but not by much. So I figured that a good amount of the targets a
 real    0m28.569s
 user    0m28.546s
 sys     0m0.009s
+
+While my initial plan to optimize was wrong I was correct that once a number is bigger than the target we can dispose
+of it. That early exit bought me three more seconds!
+
+real    0m25.208s
+user    0m25.178s
+sys     0m0.017s
+
+And we got there in the end with recursion.
+
+real    0m2.895s
+user    0m2.893s
+sys     0m0.000s
 """
-import itertools as it
 
 from sys import argv
 
 
-def solve(test, nums: list[str], ops=["*", "+"]) -> None:
-    perms = it.product(ops, repeat=len(nums) - 1)
-    for x, perm in enumerate(perms):
-        tot = nums[0]
-        for i, op in enumerate(perm):
-            y = nums[i + 1]
-            if op == "*":
-                tot *= y
-            if op == "+":
-                tot += y
-            if op == "|":
-                tot = int(str(tot) + str(y))
+def solve(test, nums: list[str]) -> None:
+    def r(tot: int, i: int):
+        if tot == test:
+            return True
 
-            if tot == test:
-                return True
+        i += 1
+        if (tot > test) or (i == len(nums)):
+            return False
 
-    if len(ops) == 2:
-        # Try the fast way first but wrap around to the brute force
-        return solve(test, nums, ops=["*", "+", "|"])
+        if r(tot + nums[i], i):
+            return True
 
-    return False
+        if r(tot * nums[i], i):
+            return True
+
+        return r(int(str(tot) + str(nums[i])), i)
+
+    return r(nums[0], 0)
 
 
 def parse_input(filename: str) -> None:
