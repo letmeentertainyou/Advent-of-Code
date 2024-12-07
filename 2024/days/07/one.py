@@ -15,8 +15,8 @@ from sys import argv
 
 def solve(test, nums: list[str]) -> None:
     ops = ["*", "+"]
-    perms = []
-    perms.extend(it.product(ops, repeat=len(nums) - 1))
+    # perms = []
+    perms = it.product(ops, repeat=len(nums) - 1)
     for x, perm in enumerate(perms):
         tot = nums[0]
         for i, op in enumerate(perm):
