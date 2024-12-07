@@ -67,5 +67,5 @@ if __name__ == "__main__":
 
 # Test:     11387
 # Answer:   286580387663654
-#           262203531056253
+# Optimized 262203531056253 -> Smaller is better right?
 # Rank:     3660
