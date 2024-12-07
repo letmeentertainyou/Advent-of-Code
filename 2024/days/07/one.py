@@ -5,8 +5,6 @@ I loved this problem, nice and easy, I was terrified part two would include PEMD
 real    0m0.506s
 user    0m0.495s
 sys     0m0.008s
-
-I tried optimizing this one like I did for part two but it didn't save any time.
 """
 import itertools as it
 
@@ -15,7 +13,6 @@ from sys import argv
 
 def solve(test, nums: list[str]) -> None:
     ops = ["*", "+"]
-    # perms = []
     perms = it.product(ops, repeat=len(nums) - 1)
     for x, perm in enumerate(perms):
         tot = nums[0]
