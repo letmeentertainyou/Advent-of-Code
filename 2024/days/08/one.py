@@ -7,22 +7,17 @@ from collections import defaultdict
 from sys import argv
 
 
-def solve(data: dict, freq: dict) -> None:
+def solve(data: dict, freq_indexes: dict) -> None:
     nodes = set()
-    for k, indexes in freq.items():
-        nodes = map_nodes(indexes, nodes)
+    for indexes in freq_indexes:
+        for x in indexes:
+            for y in indexes:
+                if y != x:
+                    nodes.add(x - (x + y))
+                    nodes.add(y + (y - x))
 
     res = set([n for n in nodes if n in data.keys()])
     print(len(res))
-
-
-def map_nodes(indexes, nodes):
-    for f in indexes:
-        for d in indexes:
-            if d != f:
-                nodes.add(f - (f + d))
-                nodes.add(d + (d - f))
-    return nodes
 
 
 def parse_input(filename: str) -> None:
@@ -30,7 +25,7 @@ def parse_input(filename: str) -> None:
         file = (line.strip("\n") for line in tmpfile.readlines())
 
     freq = defaultdict(list)
-    data: list = {}
+    data: dict = {}
     for x, line in enumerate(file):
         for y, char in enumerate(line):
             hash = complex(x, y)
@@ -38,7 +33,7 @@ def parse_input(filename: str) -> None:
             if char.isalnum():
                 freq[char].append(hash)
 
-    solve(data, freq)
+    solve(data, freq.values())
 
 
 if __name__ == "__main__":

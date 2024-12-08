@@ -37,24 +37,15 @@ CON_EDGES: tuple[complex] = (
 )
 
 
+def cabs(n: complex):
+    """Complex abs for getting a slope without negative numbers. idk."""
+    return complex(abs(n.real), abs(n.imag))
+
+
 def clone_swap(a: list, x: int, y: int):
     A = deepcopy(a)
     A[x], A[y] = A[y], A[x]
     return A
-
-
-# This is relegated because you can just check if the key is in the dict.
-def is_valid_index_pair(array, x, y) -> bool:
-    """
-    Note: I should try the default dict method that automatically handles bounds checking.
-    """
-    len_rows = len(array)
-    len_cols = len(array[0]) if len_rows else 0
-    return 0 <= x < len_rows and 0 <= y < len_cols
-
-
-# def hash(x: int, y: int) -> complex:
-#    return complex(x, y)
 
 
 def solve(lines: list[str]) -> None:
