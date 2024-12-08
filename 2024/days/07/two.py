@@ -50,6 +50,7 @@ sys     0m0.000s
 """
 
 from sys import argv
+import math
 
 
 def solve(test, nums: list[str]) -> None:
@@ -66,7 +67,6 @@ def solve(test, nums: list[str]) -> None:
 
         if r(tot * nums[i], i):
             return True
-
         return r(int(str(tot) + str(nums[i])), i)
 
     return r(nums[0], 0)
