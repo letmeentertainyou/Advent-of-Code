@@ -14,10 +14,10 @@ from sys import argv
 
 class Range:
     def __init__(self, start: int, end: int, length: int, value="."):
-        self.start = start
-        self.end = end
-        self.length = length
-        self.value = value
+        self.start: int = start
+        self.end: int = end
+        self.length: int = length
+        self.value: int | str = value
 
     def __str__(self):
         return f"{self.start}, {self.end}, {self.length}, {self.value}"
@@ -27,15 +27,15 @@ def mem_map(line: str) -> list:
     """
     00...111...2...333.44.5555.6666.777.888899
     """
-    index = 0
-    mode = True
-    res = []
+    index: int = 0
+    mode: bool = True
+    mapped: list = []
     for char in line:
-        res.extend([index if mode else "." for _ in range(int(char))])
+        mapped.extend([index if mode else "." for _ in range(int(char))])
         if mode:
             index += 1
         mode = not mode
-    return res
+    return mapped
 
 
 def find_ranges(mapped: list) -> tuple[list]:
@@ -55,13 +55,13 @@ def find_ranges(mapped: list) -> tuple[list]:
     value = mapped[0]
     length = 0
     start = 0
-    for i, c in enumerate(mapped):
-        if c == value:
+    for i, char in enumerate(mapped):
+        if char == value:
             length += 1
         else:
             append_range()
             length = 1
-            value = c
+            value = char
             start = i
 
     append_range()
@@ -75,29 +75,28 @@ def mem_shift(mapped: list, nums: list[Range], periods: list[Range]) -> list:
     00992111777.44.333....5555.6666.....8888..
     """
 
-    for r in nums:
-        l = r.length
-        for _i, c in enumerate(periods):
+    for num_range in nums:
+        for _, per_range in enumerate(periods):
             # This is the second footgun that the example didn't have.
-            if r.start < c.start:
+            if num_range.start < per_range.start:
                 break
 
-            if l <= c.length:
-                for buff in range(l):
-                    i1 = r.end - buff
-                    i2 = c.start + buff
+            if num_range.length <= per_range.length:
+                for buff in range(num_range.length):
+                    i1 = num_range.end - buff
+                    i2 = per_range.start + buff
                     mapped[i1], mapped[i2] = mapped[i2], mapped[i1]
-                c.start += l
-                c.length -= l
+                per_range.start += num_range.length
+                per_range.length -= num_range.length
                 break
     return mapped
 
 
 def check_sum(shifted: list) -> int:
     check: int = 0
-    for i, c in enumerate(shifted):
-        if c != ".":
-            check += i * int(c)
+    for i, char in enumerate(shifted):
+        if char != ".":
+            check += i * int(char)
     return check
 
 

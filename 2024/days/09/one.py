@@ -20,15 +20,15 @@ def mem_map(line: str) -> list:
     example strings were fine but in the real data there can be values that are more
     than one digit and they change the length of the string.
     """
-    index = 0
-    mode = True
-    res = []
+    index: int = 0
+    mode: bool = True
+    mapped: list = []
     for char in line:
-        res.extend([index if mode else "." for _ in range(int(char))])
+        mapped.extend([index if mode else "." for _ in range(int(char))])
         if mode:
             index += 1
         mode = not mode
-    return res
+    return mapped
 
 
 def mem_shift(mapped: list) -> list:
@@ -38,29 +38,29 @@ def mem_shift(mapped: list) -> list:
     """
 
     def next_index() -> int | bool:
-        i = n_indexes.pop(-1)
-        if len(n_indexes) > 0:
+        i = num_indexes.pop(-1)
+        if len(num_indexes) > 0:
             if mapped[i] == ".":
-                return next_index(mapped, n_indexes)
+                return next_index(mapped, num_indexes)
             return i
         return False
 
-    n_indexes = [i for i, c in enumerate(mapped) if c != "."]
-    for i, c in enumerate(mapped):
-        if c == ".":
-            r = next_index()
-            if (not r) or (r < i):
+    num_indexes = [i for i, c in enumerate(mapped) if c != "."]
+    for i1, char in enumerate(mapped):
+        if char == ".":
+            i2 = next_index()
+            if (not i2) or (i2 < i1):
                 break
-            mapped[i], mapped[r] = mapped[r], mapped[i]
+            mapped[i1], mapped[i2] = mapped[i2], mapped[i1]
 
     return mapped
 
 
 def check_sum(shifted) -> int:
     check: int = 0
-    for i, c in enumerate(shifted):
-        if c != ".":
-            check += i * int(c)
+    for i, char in enumerate(shifted):
+        if char != ".":
+            check += i * int(char)
     return check
 
 
