@@ -48,9 +48,7 @@ real    0m2.895s
 user    0m2.893s
 sys     0m0.000s
 """
-
 from sys import argv
-import math
 
 
 def solve(test, nums: list[str]) -> None:

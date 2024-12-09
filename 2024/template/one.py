@@ -38,7 +38,7 @@ CON_EDGES: tuple[complex] = (
 
 
 def cabs(n: complex):
-    """Complex abs for getting a slope without negative numbers. idk."""
+    """Complex abs for getting a slope without negative numbers."""
     return complex(abs(n.real), abs(n.imag))
 
 
@@ -48,27 +48,37 @@ def clone_swap(a: list, x: int, y: int):
     return A
 
 
-def solve(lines: list[str]) -> None:
-
-    answer = 0
-
-    print(answer)
-
-
 def parse_input(filename: str) -> None:
     with open(filename, "r", encoding="UTF-8") as tmpfile:
-        file = (line.strip("\n") for line in tmpfile.readlines())
+        file = tmpfile.read().split("\n")
         # file = tmpfile.read()
-        # file = tmpfile.readlines()
 
     lines: list = []
-    for x, line in enumerate(file):
+    graph: dict = {}
+    # data: dict = defaultdict(list)
 
+    for x, line in enumerate(file):
+        lines.append(line)
         for y, char in enumerate(line):
             hash = complex(x, y)
+            graph[hash] = char
+            # data[char].append(hash)
             ...
 
-    solve(lines)
+    solve(graph, lines)
+    # solve(file)
+
+
+def solve(graph: dict, lines: list[str]) -> None:
+
+    answer = 0
+    for line in lines:
+        ...
+
+    for k, v in graph.items():
+        ...
+
+    print(answer)
 
 
 if __name__ == "__main__":

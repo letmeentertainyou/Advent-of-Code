@@ -2,11 +2,11 @@
 """
 The hardest part of this was figuring out how to access the first element of
 a sublist to match it with the labels. It also took reading the instructions like five
-times to understand all the crazy stuf happening here.
+times to understand all the crazy stuff happening here.
 
 Overall it was a really fun day!
 
-Again the test data was helpful, as well as the step by step walk through. I refered
+Again the test data was helpful, as well as the step by step walk through. I referred
 to the question page many times while debugging this!
 """
 
