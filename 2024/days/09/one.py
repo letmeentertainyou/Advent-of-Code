@@ -1,40 +1,24 @@
 #!/bin/python3.10
 """
-# every other digit of the file is free space or file length
-# file free file free
-# 0     2    0     2
-# 0202
-# if free space == 0 then the files are connected.
-# File files also have an ID number which is their order of appearance in the memory
-# 12345 becomes
-# 0..111....22222
-# put the i times the value or . times the free space
-More rightmost data into each leftmost period
-0..111....22222
-02.111....2222.
-022111....222..
-0221112...22...
-02211122..2....
-022111222......
-You can just keep the indexes of the periods instead of looking up the leftmost one every time because you are only overwriting them once and then moving on.
-We'll be finished when there are only periods or only numbers and no cross matches.
+I spent a good five to ten minutes typing up the requirements for this parsing before I solved
+it in earnest. Doing that does help me process the desired outcome but I also wish I had solved
+this once faster. The example data worked with simple string manipulations and it took me a long
+time to realize that I needed to use a list to get my real answer.
 
-We can start at the index of the last period we filled, then scan right for the next period, once we find one, we scan right again for an int. If we find any ints we aren't done. This is a little ineffeint thouigh because we want our numbers from the right so we have to know what's happening on that side too..
-
-Scan the file backwards it's done if there are no periods after the leftmost number.
-If there is a periord after the leftmost number then we must move one more number.
-Repeat ad naus.
-
-Then iterate through the final piece of memory multipling the files positions by it's original value (need to track this). If a file is memory skip it, if it's position is 0 then it multiplies to 0.
-
-Then sum those at the end,.
+real    0m0.093s
+user    0m0.089s
+sys     0m0.004s
 """
 from sys import argv
 
 
-def mem_map(line: str):
+def mem_map(line: str) -> list:
     """
     00...111...2...333.44.5555.6666.777.888899
+
+    The first footgun is that this needs to return a list and not a string. In the
+    example strings were fine but in the real data there can be values that are more
+    than one digit and they change the length of the string.
     """
     index = 0
     mode = True
@@ -47,55 +31,52 @@ def mem_map(line: str):
     return res
 
 
-def mem_shift(line: str):
+def mem_shift(mapped: list) -> list:
     """
     00...111...2...333.44.5555.6666.777.888899
     0099811188827773336446555566..............
     """
 
-    def next_index():
+    def next_index() -> int | bool:
         i = n_indexes.pop(-1)
         if len(n_indexes) > 0:
-            if line[i] == ".":
-                return next_index(line, n_indexes)
+            if mapped[i] == ".":
+                return next_index(mapped, n_indexes)
             return i
         return False
 
-    n_indexes = [i for i, c in enumerate(line) if c != "."]
-    for i, c in enumerate(line):
+    n_indexes = [i for i, c in enumerate(mapped) if c != "."]
+    for i, c in enumerate(mapped):
         if c == ".":
             r = next_index()
             if (not r) or (r < i):
                 break
-            line[i], line[r] = line[r], line[i]
+            mapped[i], mapped[r] = mapped[r], mapped[i]
 
-    return line
+    return mapped
 
 
-def check_sum(line):
-    check = 0
-    for i, c in enumerate(line):
+def check_sum(shifted) -> int:
+    check: int = 0
+    for i, c in enumerate(shifted):
         if c != ".":
             check += i * int(c)
     return check
 
 
+def solve(file: list[str]) -> None:
+    answer: int = 0
+    mapped: list = mem_map(file)
+    shifted: list = mem_shift(mapped)
+    answer += check_sum(shifted)
+    print(answer)
+
+
 def parse_input(filename: str) -> None:
     with open(filename, "r", encoding="UTF-8") as tmpfile:
-        file = [c for c in tmpfile.read()]
+        file: str = tmpfile.read()
 
     solve(file)
-
-
-def solve(file: list[str]) -> None:
-
-    answer = 0
-    # print(file)
-    file = mem_map(file)
-    file = mem_shift(file)
-    answer += check_sum(file)
-
-    print(answer)
 
 
 if __name__ == "__main__":
@@ -109,4 +90,4 @@ if __name__ == "__main__":
 
 # Test:     1928
 # Answer:   6279058075753
-# Rank:     .
+# Rank:     7015
