@@ -48,6 +48,18 @@ def clone_swap(a: list, x: int, y: int):
     return A
 
 
+def solve(graph: dict, lines: list[str]) -> None:
+
+    answer = 0
+    for line in lines:
+        ...
+
+    for k, v in graph.items():
+        ...
+
+    print(answer)
+
+
 def parse_input(filename: str) -> None:
     with open(filename, "r", encoding="UTF-8") as tmpfile:
         file = tmpfile.read().split("\n")
@@ -67,18 +79,6 @@ def parse_input(filename: str) -> None:
 
     solve(graph, lines)
     # solve(file)
-
-
-def solve(graph: dict, lines: list[str]) -> None:
-
-    answer = 0
-    for line in lines:
-        ...
-
-    for k, v in graph.items():
-        ...
-
-    print(answer)
 
 
 if __name__ == "__main__":
