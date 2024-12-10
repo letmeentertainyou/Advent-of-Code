@@ -1,6 +1,6 @@
 #!/bin/python3.10
 """
-
+This was a fun one - I would have been intimidated by path find in a previous year but having access to the directions and using complex numbers made this very easy.
 """
 from sys import argv
 
@@ -12,20 +12,20 @@ LEFT: complex = 0 + -1j
 SIDES: tuple[complex] = (TOP, RIGHT, BOTTOM, LEFT)
 
 
-def get_sides(graph: dict, start: complex, visited: list[complex]):
+def get_sides(graph: dict, start: complex):
     sides = []
     for SIDE in SIDES:
-        tmp = start + SIDE
-        if (tmp in graph) and (tmp not in visited):
-            sides.append(tmp)
+        new_side = start + SIDE
+        if new_side in graph:
+            sides.append(new_side)
     return sides
 
 
 def traverse(graph: dict, start: complex):
     def r(s):
         next = []
-        visited.append(s)
-        sides: list[complex] = get_sides(graph, s, visited)
+        sides: list[complex] = get_sides(graph, s)
+
         for side in sides:
             if int(graph[side]) == int(graph[s]) + 1:
                 if graph[side] == "9":
@@ -35,9 +35,7 @@ def traverse(graph: dict, start: complex):
         for n in next:
             r(n)
 
-    visited = []
     nine_sides: set = set()
-
     r(start)
     return len(nine_sides)
 
@@ -46,7 +44,6 @@ def solve(graph: dict, starts: list) -> None:
     answer = 0
     for start in starts:
         answer += traverse(graph, start)
-
     print(answer)
 
 

@@ -1,6 +1,6 @@
 #!/bin/python3.10
 """
-
+All I have to do here was convert my set nine_sides into a list and that was it!
 """
 from sys import argv
 
@@ -15,9 +15,9 @@ SIDES: tuple[complex] = (TOP, RIGHT, BOTTOM, LEFT)
 def get_sides(graph: dict, start: complex):
     sides = []
     for SIDE in SIDES:
-        tmp = start + SIDE
-        if tmp in graph:
-            sides.append(tmp)
+        new_side = start + SIDE
+        if new_side in graph:
+            sides.append(new_side)
     return sides
 
 
@@ -25,6 +25,7 @@ def traverse(graph: dict, start: complex):
     def r(s):
         next = []
         sides: list[complex] = get_sides(graph, s)
+
         for side in sides:
             if int(graph[side]) == int(graph[s]) + 1:
                 if graph[side] == "9":
