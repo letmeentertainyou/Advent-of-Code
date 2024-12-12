@@ -6,7 +6,7 @@ from functools import cache
 from sys import argv
 
 
-@cache
+# @cache
 def match_rules(stone: int, count: int = 0) -> int:
     if count == 75:
         return 1
