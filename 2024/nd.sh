@@ -12,6 +12,7 @@ fi
 
 echo "Creating day $1 from the template."
 cp -r template $dir_path
+rm $dir_path/utils.py
 
 echo "Opening the new day in VSCode."
 for file in $dir_path/*; do
