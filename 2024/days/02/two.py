@@ -17,8 +17,8 @@ def find_safe(line: list[int]) -> bool:
         # This avoids an index error.
         if i + 1 < len(line):
             diff = abs(current - line[i + 1])
-            # if not (1 <= diff <= 3):
-            #    return False
+            if not (1 <= diff <= 3):
+                return False
     return True
 
 

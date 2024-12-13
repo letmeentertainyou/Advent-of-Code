@@ -12,19 +12,18 @@ LEFT: complex = 0 + -1j
 SIDES: tuple[complex] = (TOP, RIGHT, BOTTOM, LEFT)
 
 
-def get_sides(graph: dict, start: complex):
-    sides = []
-    for SIDE in SIDES:
-        new_side = start + SIDE
-        if new_side in graph:
-            sides.append(new_side)
-    return sides
-
-
 def traverse(graph: dict, start: complex):
+    def get_sides(s: complex):
+        sides = []
+        for SIDE in SIDES:
+            new_side = s + SIDE
+            if new_side in graph:
+                sides.append(new_side)
+        return sides
+
     def r(s):
         next = []
-        sides: list[complex] = get_sides(graph, s)
+        sides: list[complex] = get_sides(s)
 
         for side in sides:
             if int(graph[side]) == int(graph[s]) + 1:
