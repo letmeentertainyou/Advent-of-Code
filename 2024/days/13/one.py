@@ -85,4 +85,4 @@ if __name__ == "__main__":
 
 # Test:     480
 # Answer:   40369
-# Rank:     .
+# Rank:     6271
